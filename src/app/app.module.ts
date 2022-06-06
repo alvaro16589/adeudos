@@ -4,7 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutComponent } from './layout/components/layout.component';
+import { NotFoundModule } from './notFound/not-found.module';
 import { SharedModule } from './shared/shared.module';
+
+
+
 
 
 
@@ -13,12 +17,15 @@ import { SharedModule } from './shared/shared.module';
 @NgModule({
   declarations: [
     AppComponent,
-    LayoutComponent
+    LayoutComponent,
+    
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    NotFoundModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
