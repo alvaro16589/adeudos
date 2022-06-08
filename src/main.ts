@@ -7,6 +7,9 @@ import { environment } from './environments/environment';
 if (environment.production) {
   enableProdMode();
 }
+export class mainFun {
+  ruta = "/assets/plugins/jquery/jquery.min.js";
+}
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
