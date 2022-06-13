@@ -6,7 +6,8 @@ import { AppComponent } from './app.component';
 import { LayoutComponent } from './layout/components/layout.component';
 import { NotFoundModule } from './notFound/not-found.module';
 import { SharedModule } from './shared/shared.module';
-
+import { HttpClientModule } from '@angular/common/http';
+import { CoreModule } from './core/core.module';
 
 
 
@@ -26,6 +27,8 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     SharedModule,
     NotFoundModule,
+    HttpClientModule,
+    CoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
