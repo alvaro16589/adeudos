@@ -106,10 +106,8 @@
                 </div>
                 <div class="form-group">
                     <label for="type">Type</label>
-                    <select class="custom-select form-control-border border-width-2" id="type" name="type">
-                        <option value="1">Value 1</option>
-                        <option value="2">Value 2</option>
-                        <option value="3">Value 3</option>
+                    <select  class="custom-select form-control-border border-width-2" id="type" name="type">
+                        <option *ngFor="let typeUser of typeUsers_" value="{{ typeUser.id }}">{{ typeUser.name }}</option>
                     </select>
                 </div>
                 <div class="form-group">
