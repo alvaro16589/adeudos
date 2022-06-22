@@ -13,7 +13,6 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
-
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
@@ -21,7 +20,21 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Users registered</h3>
+                            <div class="row">
+                                <div class="col-2">
+                                    <h3 class="card-title">Users registered</h3>
+                                </div>
+                                <div class="col-8">
+
+                                </div>
+                                <div class="col-2">
+                                    <!--boton del modal para agregar registros-->
+                                    <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                                        data-target="#modal-secondary">
+                                        <span class="fa fa-plus"></span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -67,3 +80,60 @@
     </section>
     <!-- /.content -->
 </div>
+<!--###################MODAL##################-->
+<div class="modal fade" id="modal-secondary">
+    <div class="modal-dialog">
+        <div class="modal-content bg-secondary">
+            <div class="modal-header">
+                <h4 class="modal-title">Secondary Modal</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--###################formulario##################-->
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control form-control-border border-width-2" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last name</label>
+                    <input type="text" class="form-control form-control-border border-width-2" id="lastName" name="lastName" placeholder="Enter your last name" required>
+                </div>
+                <div class="form-group">
+                    <label for="userName">User name</label>
+                    <input type="text" class="form-control form-control-border border-width-2" id="userName" name="userName" placeholder="Enter an user name" required>
+                </div>
+                <div class="form-group">
+                    <label for="type">Type</label>
+                    <select class="custom-select form-control-border border-width-2" id="type" name="type">
+                        <option value="1">Value 1</option>
+                        <option value="2">Value 2</option>
+                        <option value="3">Value 3</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <select class="custom-select form-control-border border-width-2" id="state">
+                        <option value="1">activo</option>
+                        <option value="2">inactivo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" class="form-control form-control-border border-width-2" id="email" name="email" placeholder="Example@gmail.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control form-control-border border-width-2" id="password" name="password" placeholder="Enter a password" required>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-light">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->

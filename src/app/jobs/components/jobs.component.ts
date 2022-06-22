@@ -8,7 +8,7 @@ import { Job } from 'src/app/core/models/job.model';
 })
 export class JobsComponent implements OnInit {
   jobs: Job[]=[];
-  total: number =99999;
+  total = 0 ;
   
   constructor(
     private jobsService: JobsService
