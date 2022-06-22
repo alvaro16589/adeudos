@@ -7,9 +7,7 @@
                 <div class="col-sm-6">
                     <h1>Jobs</h1>
                 </div>
-                <div class="col-sm-6">
-                    
-                </div>
+                
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -38,24 +36,30 @@
                                         <th>Price</th>
                                     </tr>
                                 </thead>
-                                <tbody >
-                                    <tr *ngFor="let job of jobs; index as i">
-                                        <td>{{ i+1 }}</td>
-                                        <td>{{ job.date}}</td>
-                                        <td>{{ job.title}}</td>
-                                        <td>{{ job.detail}}</td>
-                                        <td>{{ job.nameac}}</td> 
-                                        <td>{{ job.type}}</td>
-                                        <td><button class="badge bg-success">{{ job.state}}</button></td>   
-                                        <td>{{ job.price}}<p class="hidden">{{ total + job.price }}</p></td>
-                                        
-                                    </tr>                                    
+                                <tbody>
+                                    
+                                        <tr *ngFor="let job of jobs; index as i">
+                                            <td>{{ i+1 }}</td>
+                                            <td>{{ job.date}}</td>
+                                            <td>{{ job.title}}</td>
+                                            <td>{{ job.detail}}</td>
+                                            <td>{{ job.nameac}}</td>
+                                            <td>{{ job.type}}</td>
+                                            <td><button class="badge bg-success">{{ job.state}}</button></td>
+                                            <td>{{ job.price |currency : 'Bs.' }}</td>
+                                        </tr>
+                                    
+
                                 </tbody>
                                 <tfoot class="Total">
                                     <tr>
-                                       
-                                        <th colspan="7" style="text-align: right;"><h3>Total</h3></th>
-                                        <th> {{ total }} </th>
+
+                                        <th colspan="7" style="text-align: right;">
+                                            <h3>Total</h3>
+                                        </th>
+                                        <th>
+                                            <h3>{{ total | currency : 'Bs.' }}</h3>
+                                        </th>
                                     </tr>
                                 </tfoot>
                             </table>

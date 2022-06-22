@@ -8,20 +8,26 @@ import { Job } from 'src/app/core/models/job.model';
 })
 export class JobsComponent implements OnInit {
   jobs: Job[]=[];
-  total = 0;
- 
+  total: number =99999;
+  
   constructor(
     private jobsService: JobsService
   ) { }
 
   ngOnInit() {
     this.fetchJobs();
-    
+  
   }
   fetchJobs(){
     this.jobsService.getAllJobs()
     .subscribe(jobs =>{
       this.jobs= jobs;
+      //Calculamos el TOTAL 
+      this.total = this.jobs.reduce((
+        acc,
+        obj,
+      ) => acc + obj.price , 0 );
+
     });
   }
 

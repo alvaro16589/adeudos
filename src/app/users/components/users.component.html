@@ -1,1 +1,69 @@
-<p>users works!</p>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Users</h1>
+                </div>
+                <div class="col-sm-6">
+
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Users registered</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="index" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>N°</th>
+                                        <th>Name</th>
+                                        <th>User name</th>
+                                        <th>Type</th>
+                                        <th>Email</th>
+                                        <th>State</th>
+                                       
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                        <tr *ngFor="let user of users_; index as i">
+                                            <td>{{ i+1 }}</td>
+                                            <td>{{ user.name + ' ' + user.lastname }}</td>
+                                            <td>{{ user.nameac }}</td>
+                                            <td>{{ user.type }}</td>
+                                            <td>{{ user.email }}</td>
+                                            <td><button class="badge bg-success">{{ user.state}}</button></td>
+                                          
+                                        </tr>
+                                    
+
+                                </tbody>
+                                
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
