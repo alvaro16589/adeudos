@@ -15,3 +15,24 @@ export interface User{
     state: string;
    
 }
+
+export interface saveUser{
+    name:string;
+    lastname:string;
+    nameac: string;
+    idtype: number;
+    idstate: number;
+    email: string;
+    password: string;
+}
+export interface updateUser{
+    id: number;
+    name:string;
+    lastname:string;
+    nameac: string;
+    idtype: number;
+    idstate: number;
+    email: string;
+    password: string;
+    
+}

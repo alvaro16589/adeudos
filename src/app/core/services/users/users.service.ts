@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../../models/user.model';
+import { environment } from 'src/environments/environment';
+import { User, saveUser, updateUser } from '../../models/user.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,6 +11,12 @@ export class UsersService {
     private http:HttpClient
   ) { }
   getAllUsers(){
-    return this.http.get<User[]>('http://localhost:8000/api/users');
+    return this.http.get<User[]>(environment.url_of_api + 'users');
+  }
+  createUser(user : saveUser){
+    return this.http.post(environment.url_of_api + 'users', user);
+  }
+  updateUser(user : updateUser){
+    return this.http.patch(environment.url_of_api + 'users/'+ user.id, user);
   }
 }
