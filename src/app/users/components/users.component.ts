@@ -36,14 +36,14 @@ export class UsersComponent implements OnInit {
   newUser!: saveUser;
 
   formUpdate = new FormGroup({
-    id: new FormControl(''),
-    name: new FormControl('', Validators.required),
-    lastname: new FormControl('', Validators.required),
-    nameac: new FormControl('', Validators.required),
-    idtype: new FormControl('', Validators.required),
-    idstate: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
+    id: new FormControl(),
+    name: new FormControl(),
+    lastname: new FormControl(),
+    nameac: new FormControl(),
+    idtype: new FormControl(),
+    idstate: new FormControl(),
+    email: new FormControl(),
+    password: new FormControl(),
   });
   
   userUpdate! : updateUser;

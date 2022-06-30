@@ -73,7 +73,7 @@
                                         <td>
                                             <button type="button" class="btn btn-warning btn-sm" 
                                                 data-toggle="modal"
-                                                [data-target]="'#modal' + user.id.toString()">
+                                                data-target="#modal">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                                     <path
@@ -96,7 +96,7 @@
                                         </td>
                                         <!--form-->
                                         <!--###################MODAL##################-->
-                                        <div class="modal fade" id="modal{{ user.id }}">
+                                        <div class="modal fade" id="modal">
                                             <div class="modal-dialog">
                                                 <div class="modal-content bg-secondary">
                                                     <div class="modal-header">
