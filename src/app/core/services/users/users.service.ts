@@ -16,7 +16,7 @@ export class UsersService {
   createUser(user : saveUser){
     return this.http.post(environment.url_of_api + 'users', user);
   }
-  updateUser(user : updateUser){
-    return this.http.patch(environment.url_of_api + 'users/'+ user.id, user);
+  updateUser(id:string, changes : Partial<updateUser>){
+    return this.http.put(environment.url_of_api + 'users/'+ id, changes);
   }
 }
