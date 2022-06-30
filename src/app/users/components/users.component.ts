@@ -7,7 +7,7 @@ import { StateService } from 'src/app/core/services/state/state.service';
 import { State } from 'src/app/core/models/state.model';
 
 //trabajar con formularios
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 
 
 //
@@ -22,28 +22,28 @@ export class UsersComponent implements OnInit {
   typeUsers_: TypeUser[] = [];
   states_: State[] = [];
 
-  form = new FormGroup({
-    name: new FormControl('', Validators.required),
-    lastname: new FormControl('', Validators.required),
-    nameac: new FormControl('', Validators.required),
-    idtype: new FormControl('', Validators.required),
-    idstate: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
+  form = new UntypedFormGroup({
+    name: new UntypedFormControl('', Validators.required),
+    lastname: new UntypedFormControl('', Validators.required),
+    nameac: new UntypedFormControl('', Validators.required),
+    idtype: new UntypedFormControl('', Validators.required),
+    idstate: new UntypedFormControl('', Validators.required),
+    email: new UntypedFormControl('', Validators.required),
+    password: new UntypedFormControl('', Validators.required),
 
   });
   
   newUser!: saveUser;
 
-  formUpdate = new FormGroup({
-    id: new FormControl(),
-    name: new FormControl(),
-    lastname: new FormControl(),
-    nameac: new FormControl(),
-    idtype: new FormControl(),
-    idstate: new FormControl(),
-    email: new FormControl(),
-    password: new FormControl(),
+  formUpdate = new UntypedFormGroup({
+    id: new UntypedFormControl(),
+    name: new UntypedFormControl(),
+    lastname: new UntypedFormControl(),
+    nameac: new UntypedFormControl(),
+    idtype: new UntypedFormControl(),
+    idstate: new UntypedFormControl(),
+    email: new UntypedFormControl(),
+    password: new UntypedFormControl(),
   });
   
   userUpdate! : updateUser;
