@@ -267,7 +267,7 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-outline-success" *ngIf="form.valid">
+                        <button type="submit" class="btn btn-outline-success" [disabled]="form.invalid">
                             Save user
                         </button>
                     </div>
