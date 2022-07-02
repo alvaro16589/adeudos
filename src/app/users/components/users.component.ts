@@ -23,30 +23,30 @@ export class UsersComponent implements OnInit {
   states_: State[] = [];
 
   form = new UntypedFormGroup({
+    name: new UntypedFormControl('', [Validators.required, Validators.minLength(2)]),
+    lastname: new UntypedFormControl('', [Validators.required, Validators.minLength(2)]),
+    nameac: new UntypedFormControl('', [Validators.required, Validators.minLength(2)]),
+    idtype: new UntypedFormControl('', Validators.required),
+    idstate: new UntypedFormControl('', Validators.required),
+    email: new UntypedFormControl('',[ Validators.required,Validators.email]),
+    password: new UntypedFormControl('', [Validators.required, Validators.minLength(7)]),
+
+  });
+
+  newUser!: saveUser;
+
+  formUpdate = new UntypedFormGroup({
+    id: new UntypedFormControl(),
     name: new UntypedFormControl('', Validators.required),
     lastname: new UntypedFormControl('', Validators.required),
     nameac: new UntypedFormControl('', Validators.required),
     idtype: new UntypedFormControl('', Validators.required),
     idstate: new UntypedFormControl('', Validators.required),
-    email: new UntypedFormControl('', Validators.required),
+    email: new UntypedFormControl('', [Validators.required, Validators.email]),
     password: new UntypedFormControl('', Validators.required),
-
   });
-  
-  newUser!: saveUser;
 
-  formUpdate = new UntypedFormGroup({
-    id: new UntypedFormControl(),
-    name: new UntypedFormControl(),
-    lastname: new UntypedFormControl(),
-    nameac: new UntypedFormControl(),
-    idtype: new UntypedFormControl(),
-    idstate: new UntypedFormControl(),
-    email: new UntypedFormControl(),
-    password: new UntypedFormControl(),
-  });
-  
-  userUpdate! : updateUser;
+  userUpdate!: updateUser;
 
   constructor(
 
@@ -107,7 +107,67 @@ export class UsersComponent implements OnInit {
       .subscribe(user => {
 
         this.fetchUsers();//after storage items, it back to fill the table
+        alert("Guardado con exito");
       });
+
+  }
+
+  fillUpdateField(id: string) {
+    for (let index = 0; index < this.users_.length; index++) {
+      if (id == this.users_[index].id.toString()) {
+        this.formUpdate.patchValue({
+          id: this.users_[index].id,
+          name: this.users_[index].name,
+          lastname: this.users_[index].lastname,
+          nameac: this.users_[index].nameac,
+          idtype: this.users_[index].idtype,
+          idstate: this.users_[index].idstate,
+          email: this.users_[index].email,
+          password: this.users_[index].password,
+        })
+      }
+
+    }
+
+  }
+  changeStateUser(id_: string, state: string) {
+
+    var ch = 0;
+    if (state == "activo") {
+      ch = 2;
+    } else {
+      ch = 1;
+    }
+    for (let index = 0; index < this.users_.length; index++) {
+      if (id_ == this.users_[index].id.toString()) {
+        this.formUpdate.patchValue({
+          id: this.users_[index].id,
+          name: this.users_[index].name,
+          lastname: this.users_[index].lastname,
+          nameac: this.users_[index].nameac,
+          idtype: this.users_[index].idtype,
+          idstate: ch,
+          email: this.users_[index].email,
+          password: this.users_[index].password,
+        })
+      }
+
+    }
+    this.userUpdate = this.formUpdate.value;
+
+    this.usersService.updateUser(id_, this.userUpdate)
+      .subscribe(user => {
+        this.fetchUsers();//after storage items, it back to fill the table
+      });
+  }
+
+  deleteUserField(id : string){
+    if(confirm("Are you sure?, this users will delete.")){
+      this.usersService.deleteUser(id)
+      .subscribe(user => {
+        this.fetchUsers();//after storage items, it back to fill the table
+      });
+    }
 
   }
 

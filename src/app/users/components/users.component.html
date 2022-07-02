@@ -57,7 +57,8 @@
                                         <td>{{ user.nameac }}</td>
                                         <td>{{ user.type }}</td>
                                         <td>{{ user.email }}</td>
-                                        <td><button type="button" class="btn btn-secundary btn-sm">
+                                        <td><button type="button" class="btn btn-secundary btn-sm"
+                                                (click)="changeStateUser(user.id.toString(), user.state.toString())">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                     fill="currentColor" class="bi bi-toggles2" viewBox="0 0 16 16">
                                                     <path
@@ -68,12 +69,15 @@
                                                 </svg>
                                                 &nbsp;
                                                 <!--etiqueta de espacio -->
-                                                <span class="badge bg-info">{{ user.state}}</span>
+                                                <span class="badge bg-success" *ngIf="user.state == 'activo'">{{
+                                                    user.state}}</span>
+                                                <span class="badge bg-danger" *ngIf="user.state == 'inactivo'">{{
+                                                    user.state}}</span>
                                             </button></td>
                                         <td>
-                                            <button type="button" class="btn btn-warning btn-sm" 
-                                                data-toggle="modal"
-                                                data-target="#modal">
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                                data-target="#modalUpdate"
+                                                (click)="fillUpdateField(user.id.toString())">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                                     <path
@@ -84,7 +88,8 @@
                                             </button>
                                             &nbsp;
                                             <!--etiqueta de espacio -->
-                                            <button type="button" class="btn btn-danger btn-sm">
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                (click)="deleteUserField(user.id.toString())">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                                     <path
@@ -94,105 +99,95 @@
                                                 </svg>
                                             </button>
                                         </td>
-                                        <!--form-->
-                                        <!--###################MODAL##################-->
-                                        <div class="modal fade" id="modal">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content bg-secondary">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title">Secondary Modal</h4>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <!--###################formulario##################-->
-                                                        <form [formGroup]="formUpdate" (ngSubmit)="updateUser()">
-                                                            <div class="form-group">
-                                                                <label for="id">id</label>
-                                                                <input type="text"
-                                                                    class="form-control form-control-border border-width-2"
-                                                                    id="id" name="id" formControlName="id"
-                                                                    value="{{ user.id }}">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="name">Name</label>
-                                                                <input type="text"
-                                                                    class="form-control form-control-border border-width-2"
-                                                                    id="name" name="name" placeholder="Enter your name"
-                                                                    formControlName="name" 
-                                                                    value="{{ user.name }}">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="lastName">Last name</label>
-                                                                <input type="text"
-                                                                    class="form-control form-control-border border-width-2"
-                                                                    id="lastName" name="lastName"
-                                                                    placeholder="Enter your last name"
-                                                                    formControlName="lastname"
-                                                                    value="{{ user.lastname }}">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="userName">User name</label>
-                                                                <input type="text"
-                                                                    class="form-control form-control-border border-width-2"
-                                                                    id="userName" name="userName"
-                                                                    placeholder="Enter an user name"
-                                                                    formControlName="nameac" 
-                                                                    value="{{ user.nameac }}">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="type">Type</label>
-                                                                <select
-                                                                    class="custom-select form-control-border border-width-2"
-                                                                    id="type" name="type" formControlName="idtype">
-                                                                    <option value="" disabled>Select a option</option>
-                                                                    <option *ngFor="let typeUser of typeUsers_"
-                                                                        value="{{ typeUser.id }}">
-                                                                        {{ typeUser.name }}
-                                                                    </option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="email">E-mail</label>
-                                                                <input type="email"
-                                                                    class="form-control form-control-border border-width-2"
-                                                                    id="email" name="email"
-                                                                    placeholder="Example@gmail.com"
-                                                                    formControlName="email" 
-                                                                    value="{{ user.email }}">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="password">Password</label>
-                                                                <input type="password"
-                                                                    class="form-control form-control-border border-width-2"
-                                                                    id="password" name="password"
-                                                                    placeholder="Enter a password"
-                                                                    formControlName="password"
-                                                                    value="{{ user.password }}">
-                                                            </div>
-                                                            <div class="modal-footer justify-content-between">
-                                                                <button type="button" class="btn btn-outline-light"
-                                                                    data-dismiss="modal">Close</button>
-                                                                <button type="submit" class="btn btn-outline-success"
-                                                                    *ngIf="formUpdate.valid">
-                                                                    Save user
-                                                                </button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                    <!-- /.modal-content -->
-                                                </div>
-                                                <!-- /.modal-dialog -->
-                                            </div>
-                                            <!-- /.modal -->
-                                        </div>
-                                        <!--end form-->
+
                                     </tr>
                                 </tbody>
 
                             </table>
+                            <!--form-->
+                            <!--###################MODAL##################-->
+                            <div class="modal fade" id="modalUpdate">
+                                <div class="modal-dialog">
+                                    <div class="modal-content bg-secondary">
+                                        <div class="modal-header ">
+                                            <h4 class="modal-title">Update user</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!--###################formulario##################-->
+                                            <form [formGroup]="formUpdate" (ngSubmit)="updateUser()">
+                                                <div class="form-group hidden">
+                                                    <label for="id">id</label>
+                                                    <input type="text"
+                                                        class="form-control form-control-border border-width-2" id="id"
+                                                        name="id" formControlName="id">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="name">Name</label>
+                                                    <input type="text"
+                                                        class="form-control form-control-border border-width-2"
+                                                        id="name" name="name" placeholder="Enter your name"
+                                                        formControlName="name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="lastName">Last name</label>
+                                                    <input type="text"
+                                                        class="form-control form-control-border border-width-2"
+                                                        id="lastName" name="lastName" placeholder="Enter your last name"
+                                                        formControlName="lastname">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="userName">User name</label>
+                                                    <input type="text"
+                                                        class="form-control form-control-border border-width-2"
+                                                        id="userName" name="userName" placeholder="Enter an user name"
+                                                        formControlName="nameac">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="type">Type</label>
+                                                    <select class="custom-select form-control-border border-width-2"
+                                                        id="type" name="type" formControlName="idtype">
+                                                        <option value="" disabled>Select a option</option>
+                                                        <option *ngFor="let typeUser of typeUsers_"
+                                                            value="{{ typeUser.id }}">
+                                                            {{ typeUser.name }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email">E-mail</label>
+                                                    <input type="email"
+                                                        class="form-control form-control-border border-width-2"
+                                                        id="email" name="email" placeholder="Example@gmail.com"
+                                                        formControlName="email">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="password">Password</label>
+                                                    <input type="password"
+                                                        class="form-control form-control-border border-width-2"
+                                                        id="password" name="password" placeholder="Enter a password"
+                                                        formControlName="password">
+                                                </div>
+                                                <div class="modal-footer justify-content-between">
+                                                    <button type="button" class="btn btn-outline-light"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-outline-success"
+                                                        *ngIf="formUpdate.valid">
+                                                        Save user
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+                                <!-- /.modal -->
+                            </div>
+                            <!--end form-->
+                            <!-- /.modal -->
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -222,8 +217,15 @@
                 <form [formGroup]="form" (ngSubmit)="createOneUser()">
                     <div class="form-group">
                         <label for="name">Name</label>
+
                         <input type="text" class="form-control form-control-border border-width-2" id="name" name="name"
                             placeholder="Enter your name" formControlName="name">
+                        <div *ngIf="form.get('name').errors && form.get('name').dirty">
+                            <span class="badge bg-danger text-wrap" *ngIf="form.get('name').hasError('required')" >elemento requerido</span>
+                            &nbsp;
+                            <span class="badge bg-danger text-wrap" *ngIf="form.get('name').hasError('minLength')">Debe tener más de dos letras</span>
+                        </div>
+
                     </div>
                     <div class="form-group">
                         <label for="lastName">Last name</label>
