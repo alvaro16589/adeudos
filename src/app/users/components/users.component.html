@@ -58,7 +58,8 @@
                                         <td>{{ user.nameac }}</td>
                                         <td>{{ user.type }}</td>
                                         <td>{{ user.email }}</td>
-                                        <td><button type="button" class="btn btn-outline-light btn-sm"
+                                        <td>
+                                            <button type="button" class="btn btn-outline-light btn-sm"
                                                 (click)="changeStateUser(user.id.toString(), user.state.toString())">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                     fill="currentColor" class="bi bi-toggles2" viewBox="0 0 16 16">
@@ -127,85 +128,112 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="name">Name</label>
-                            
-                                                    <input type="text" class="form-control form-control-border border-width-2" id="name" name="name"
-                                                        placeholder="Enter your name" formControlName="name" minlength="2">
+
+                                                    <input type="text"
+                                                        class="form-control form-control-border border-width-2"
+                                                        id="name" name="name" placeholder="Enter your name"
+                                                        formControlName="name" minlength="2">
                                                     <!--mensajes de validación-->
-                                                    <div *ngIf="formUpdate get('name')?.errors  && formUpdate.get('name')?.dirty ">
-                                                        <span class="badge bg-danger text-wrap" *ngIf="formUpdate.get('name')?.hasError('required')">
+                                                    <div
+                                                        *ngIf="formUpdate get('name')?.errors  && formUpdate.get('name')?.dirty ">
+                                                        <span class="badge bg-danger text-wrap"
+                                                            *ngIf="formUpdate.get('name')?.hasError('required')">
                                                             {{ messages.msj2 }}</span>
                                                         &nbsp;
-                                                        <span class="badge bg-danger text-wrap" *ngIf="formUpdate.get('name')?.hasError('minlength')">
+                                                        <span class="badge bg-danger text-wrap"
+                                                            *ngIf="formUpdate.get('name')?.hasError('minlength')">
                                                             {{ messages.msj1 }}</span>
                                                     </div>
-                            
+
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="lastname">Last name</label>
-                                                    <input type="text" class="form-control form-control-border border-width-2" id="lastname"
-                                                        name="lastname" placeholder="Enter your last name" formControlName="lastname" minlength="2">
-                                                    
+                                                    <input type="text"
+                                                        class="form-control form-control-border border-width-2"
+                                                        id="lastname" name="lastname" placeholder="Enter your last name"
+                                                        formControlName="lastname" minlength="2">
+
                                                     <!--mensajes de validación-->
-                                                    <div *ngIf="formUpdate.get('lastname')?.errors  && formUpdate.get('lastname')?.dirty ">
-                                                        <span class="badge bg-danger text-wrap" *ngIf="formUpdate.get('lastname')?.hasError('required')">
+                                                    <div
+                                                        *ngIf="formUpdate.get('lastname')?.errors  && formUpdate.get('lastname')?.dirty ">
+                                                        <span class="badge bg-danger text-wrap"
+                                                            *ngIf="formUpdate.get('lastname')?.hasError('required')">
                                                             {{ messages.msj2 }}</span>
                                                         &nbsp;
-                                                        <span class="badge bg-danger text-wrap" *ngIf="formUpdate.get('lastname')?.hasError('minlength')">
+                                                        <span class="badge bg-danger text-wrap"
+                                                            *ngIf="formUpdate.get('lastname')?.hasError('minlength')">
                                                             {{ messages.msj1 }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="nameac">User name</label>
-                                                    <input type="text" class="form-control form-control-border border-width-2" id="nameac"
-                                                        name="nameac" placeholder="Enter an user name" formControlName="nameac" minlength="2">
-                                                                            
-                                                        <!--mensajes de validación-->  
-                                                    <div *ngIf="formUpdate.get('nameac')?.errors  && formUpdate.get('nameac')?.dirty ">
-                                                        <span class="badge bg-danger text-wrap" *ngIf="formUpdate.get('nameac')?.hasError('required')">
+                                                    <input type="text"
+                                                        class="form-control form-control-border border-width-2"
+                                                        id="nameac" name="nameac" placeholder="Enter an user name"
+                                                        formControlName="nameac" minlength="2">
+
+                                                    <!--mensajes de validación-->
+                                                    <div
+                                                        *ngIf="formUpdate.get('nameac')?.errors  && formUpdate.get('nameac')?.dirty ">
+                                                        <span class="badge bg-danger text-wrap"
+                                                            *ngIf="formUpdate.get('nameac')?.hasError('required')">
                                                             {{ messages.msj2 }}</span>
                                                         &nbsp;
-                                                        <span class="badge bg-danger text-wrap" *ngIf="formUpdate.get('nameac')?.hasError('minlength')">
+                                                        <span class="badge bg-danger text-wrap"
+                                                            *ngIf="formUpdate.get('nameac')?.hasError('minlength')">
                                                             {{ messages.msj1 }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="type">Type</label>
-                                                    <select class="custom-select form-control-border border-width-2" id="type" name="type"
-                                                        formControlName="idtype">
+                                                    <select class="custom-select form-control-border border-width-2"
+                                                        id="type" name="type" formControlName="idtype">
                                                         <option value="" disabled>Select a option</option>
-                                                        <option *ngFor="let typeUser of typeUsers_" value="{{ typeUser.id }}">
+                                                        <option *ngFor="let typeUser of typeUsers_"
+                                                            value="{{ typeUser.id }}">
                                                             {{ typeUser.name }}
                                                         </option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="email">E-mail</label>
-                                                    <input type="email" class="form-control form-control-border border-width-2" id="email"
-                                                        name="email" placeholder="Example@gmail.com" formControlName="email" minlength="5">
-                                                    
-                                                        <!--mensajes de validación-->  
-                                                    <div *ngIf="formUpdate.get('email')?.errors  && formUpdate.get('email')?.dirty ">
-                                                        <span class="badge bg-danger text-wrap" *ngIf="formUpdate.get('email')?.hasError('required')">
+                                                    <input type="email"
+                                                        class="form-control form-control-border border-width-2"
+                                                        id="email" name="email" placeholder="Example@gmail.com"
+                                                        formControlName="email" minlength="5">
+
+                                                    <!--mensajes de validación-->
+                                                    <div
+                                                        *ngIf="formUpdate.get('email')?.errors  && formUpdate.get('email')?.dirty ">
+                                                        <span class="badge bg-danger text-wrap"
+                                                            *ngIf="formUpdate.get('email')?.hasError('required')">
                                                             {{ messages.msj2 }}</span>
                                                         &nbsp;
-                                                        <span class="badge bg-danger text-wrap" *ngIf="formUpdate.get('email')?.hasError('email')">
+                                                        <span class="badge bg-danger text-wrap"
+                                                            *ngIf="formUpdate.get('email')?.hasError('email')">
                                                             {{ messages.msj3 }}</span>
                                                         &nbsp;
-                                                        <span class="badge bg-danger text-wrap" *ngIf="formUpdate.get('email')?.hasError('minlength')">
+                                                        <span class="badge bg-danger text-wrap"
+                                                            *ngIf="formUpdate.get('email')?.hasError('minlength')">
                                                             {{ messages.msj1 }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="password">Password</label>
-                                                    <input type="password" class="form-control form-control-border border-width-2" id="password"
-                                                        name="password" placeholder="Enter a password" formControlName="password" minlength="7">
-                            
-                                                    <!--mensajes de validación-->  
-                                                    <div *ngIf="formUpdate.get('password')?.errors  && formUpdate.get('password')?.dirty ">
-                                                        <span class="badge bg-danger text-wrap" *ngIf="formUpdate.get('password')?.hasError('required')">
+                                                    <input type="password"
+                                                        class="form-control form-control-border border-width-2"
+                                                        id="password" name="password" placeholder="Enter a password"
+                                                        formControlName="password" minlength="7">
+
+                                                    <!--mensajes de validación-->
+                                                    <div
+                                                        *ngIf="formUpdate.get('password')?.errors  && formUpdate.get('password')?.dirty ">
+                                                        <span class="badge bg-danger text-wrap"
+                                                            *ngIf="formUpdate.get('password')?.hasError('required')">
                                                             {{ messages.msj2 }} </span>
                                                         &nbsp;
-                                                        <span class="badge bg-danger text-wrap" *ngIf="formUpdate.get('password')?.hasError('minlength')">
+                                                        <span class="badge bg-danger text-wrap"
+                                                            *ngIf="formUpdate.get('password')?.hasError('minlength')">
                                                             {{ messages.msj1 }}</span>
                                                     </div>
                                                 </div>
@@ -213,7 +241,7 @@
                                                     <button type="button" class="btn btn-outline-light"
                                                         data-dismiss="modal">Close</button>
                                                     <button type="submit" class="btn btn-outline-success"
-                                                        *ngIf="formUpdate.valid">
+                                                    [disabled]="formUpdate.invalid">
                                                         Save user
                                                     </button>
                                                 </div>
@@ -246,7 +274,7 @@
     <div class="modal-dialog">
         <div class="modal-content bg-secondary">
             <div class="modal-header">
-                <h4 class="modal-title">Secondary Modal</h4>
+                <h4 class="modal-title">Form to add user</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -273,7 +301,7 @@
                         <label for="lastname">Last name</label>
                         <input type="text" class="form-control form-control-border border-width-2" id="lastname"
                             name="lastname" placeholder="Enter your last name" formControlName="lastname" minlength="2">
-                        
+
                         <!--mensajes de validación-->
                         <div *ngIf="form.get('lastname')?.errors  && form.get('lastname')?.dirty ">
                             <span class="badge bg-danger text-wrap" *ngIf="form.get('lastname')?.hasError('required')">
@@ -287,8 +315,8 @@
                         <label for="nameac">User name</label>
                         <input type="text" class="form-control form-control-border border-width-2" id="nameac"
                             name="nameac" placeholder="Enter an user name" formControlName="nameac" minlength="2">
-                                                
-                            <!--mensajes de validación-->  
+
+                        <!--mensajes de validación-->
                         <div *ngIf="form.get('nameac')?.errors  && form.get('nameac')?.dirty ">
                             <span class="badge bg-danger text-wrap" *ngIf="form.get('nameac')?.hasError('required')">
                                 {{ messages.msj2 }}</span>
@@ -321,8 +349,8 @@
                         <label for="email">E-mail</label>
                         <input type="email" class="form-control form-control-border border-width-2" id="email"
                             name="email" placeholder="Example@gmail.com" formControlName="email" minlength="5">
-                        
-                            <!--mensajes de validación-->  
+
+                        <!--mensajes de validación-->
                         <div *ngIf="form.get('email')?.errors  && form.get('email')?.dirty ">
                             <span class="badge bg-danger text-wrap" *ngIf="form.get('email')?.hasError('required')">
                                 {{ messages.msj2 }}</span>
@@ -339,7 +367,7 @@
                         <input type="password" class="form-control form-control-border border-width-2" id="password"
                             name="password" placeholder="Enter a password" formControlName="password" minlength="7">
 
-                        <!--mensajes de validación-->  
+                        <!--mensajes de validación-->
                         <div *ngIf="form.get('password')?.errors  && form.get('password')?.dirty ">
                             <span class="badge bg-danger text-wrap" *ngIf="form.get('password')?.hasError('required')">
                                 {{ messages.msj2 }} </span>

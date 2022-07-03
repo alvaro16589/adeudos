@@ -19,8 +19,8 @@ import { UsersService } from 'src/app/core/services/users/users.service';
   styleUrls: ['./jobs.component.css']
 })
 export class JobsComponent implements OnInit {
-  jobs: Job[]=[];
-  total = 0 ;
+  jobs: Job[] = [];
+  total = 0;
   typeJobs_: TypeJob[] = [];
   states_: State[] = [];
   users_: User[] = [];
@@ -35,7 +35,7 @@ export class JobsComponent implements OnInit {
     title: new UntypedFormControl('', [Validators.required, Validators.minLength(2)]),
     detail: new UntypedFormControl('', [Validators.required, Validators.minLength(2)]),
     date: new UntypedFormControl('', Validators.required),
-    price: new UntypedFormControl('20', [Validators.required,Validators.min(20),Validators.max(100)]),
+    price: new UntypedFormControl('20', [Validators.required, Validators.min(20), Validators.max(200)]),
     idtype: new UntypedFormControl('', Validators.required),
     iduser: new UntypedFormControl('', Validators.required),
     idstate: new UntypedFormControl('', Validators.required),
@@ -45,11 +45,11 @@ export class JobsComponent implements OnInit {
   newJob!: SaveJob;
 
   formUpdate = new UntypedFormGroup({
-    
+    id: new UntypedFormControl(),
     title: new UntypedFormControl('', [Validators.required, Validators.minLength(2)]),
     detail: new UntypedFormControl('', [Validators.required, Validators.minLength(2)]),
     date: new UntypedFormControl('', Validators.required),
-    price: new UntypedFormControl('', [Validators.required,Validators.min(20),Validators.max(100)]),
+    price: new UntypedFormControl('', [Validators.required, Validators.min(20), Validators.max(200)]),
     idtype: new UntypedFormControl('', Validators.required),
     iduser: new UntypedFormControl('', Validators.required),
     idstate: new UntypedFormControl('', Validators.required),
@@ -59,8 +59,8 @@ export class JobsComponent implements OnInit {
 
   constructor(
     private jobsService: JobsService,
-    private typeJobService : TypeJobService,
-    private stateService:StateService,
+    private typeJobService: TypeJobService,
+    private stateService: StateService,
     private usersService: UsersService
   ) { }
 
@@ -70,17 +70,17 @@ export class JobsComponent implements OnInit {
     this.fetchTypeJobs();
     this.fetchUsers();
   }
-  fetchJobs(){
+  fetchJobs() {
     this.jobsService.getAllJobs()
-    .subscribe(jobs =>{
-      this.jobs= jobs;
-      //Calculamos el TOTAL 
-      this.total = this.jobs.reduce((
-        acc,
-        obj,
-      ) => acc + obj.price , 0 );
+      .subscribe(jobs => {
+        this.jobs = jobs;
+        //Calculamos el TOTAL 
+        this.total = this.jobs.reduce((
+          acc,
+          obj,
+        ) => acc + obj.price, 0);
 
-    });
+      });
   }
 
   fetchUsers() {
@@ -107,7 +107,7 @@ export class JobsComponent implements OnInit {
   }
 
   createOneJob() {
-
+    console.log("estamos en createonejob");
     this.jobsService.createJob(this.form.value)
       .subscribe(jobs => {
 
@@ -117,9 +117,9 @@ export class JobsComponent implements OnInit {
 
   }
 
-  updateJob(id:string) {
+  updateJob() {
 
-    this.jobsService.updateJob(id, this.formUpdate.value)
+    this.jobsService.updateJob(this.formUpdate.value.id, this.formUpdate.value)
       .subscribe(user => {
 
         this.fetchJobs();//after storage items, it back to fill the table
@@ -132,10 +132,59 @@ export class JobsComponent implements OnInit {
     if (confirm("Are you sure?, this Job will delete.")) {
       this.jobsService.deleteJob(id)
         .subscribe(user => {
-          this.fetchUsers();//after storage items, it back to fill the table
+          this.fetchJobs();//after storage items, it back to fill the table
         });
     }
 
+  }
+
+  fillUpdateField(id: string) {
+    for (let index = 0; index < this.jobs.length; index++) {
+      if (id == this.jobs[index].id.toString()) {
+        this.formUpdate.patchValue({
+          id: this.jobs[index].id,
+          title: this.jobs[index].title,
+          detail: this.jobs[index].detail,
+          date: this.jobs[index].date,
+          price: this.jobs[index].price,
+          idtype: this.jobs[index].idtype,
+          iduser: this.jobs[index].iduser,
+          idstate: this.jobs[index].idstate
+        })
+      }
+
+    }
+
+  }
+  changeStateJob(id_: string, state: string) {
+
+    var ch = 0;
+    if (state == "activo") {
+      ch = 2;
+    } else {
+      ch = 1;
+    }
+    for (let index = 0; index < this.jobs.length; index++) {
+      if (id_ == this.jobs[index].id.toString()) {
+        this.formUpdate.patchValue({
+          id:this.jobs[index].id,
+          title: this.jobs[index].title,
+          detail: this.jobs[index].detail,
+          date: this.jobs[index].date,
+          price: this.jobs[index].price,
+          idtype: this.jobs[index].idtype,
+          iduser: this.jobs[index].iduser,
+          idstate: ch,
+        })
+      }
+
+    }
+    
+
+    this.jobsService.updateJob(id_, this.formUpdate.value)
+      .subscribe(user => {
+        this.fetchJobs();//after storage items, it back to fill the table
+      });
   }
 
 }

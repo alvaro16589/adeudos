@@ -7,7 +7,7 @@
                 <div class="col-sm-6">
                     <h1>Jobs</h1>
                 </div>
-                
+
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -19,7 +19,22 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Works done</h3>
+                            <div class="row">
+                                <div class="col col-md-2">
+                                    <h3 class="card-title">Works done</h3>
+                                </div>
+                                <div class="col col-md-9">
+
+                                </div>
+                                <div class="col col-md-1">
+                                    <!--boton del modal para agregar registros-->
+                                    <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                                        data-target="#modal-secondary">
+                                        Add
+                                        <span class="fa fa-plus"></span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -34,21 +49,66 @@
                                         <th>Type</th>
                                         <th>State</th>
                                         <th>Price</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
-                                        <tr *ngFor="let job of jobs; index as i">
-                                            <td>{{ i+1 }}</td>
-                                            <td>{{ job.date}}</td>
-                                            <td>{{ job.title}}</td>
-                                            <td>{{ job.detail}}</td>
-                                            <td>{{ job.nameac}}</td>
-                                            <td>{{ job.type}}</td>
-                                            <td><button class="badge bg-success">{{ job.state}}</button></td>
-                                            <td>{{ job.price |currency : 'Bs.' }}</td>
-                                        </tr>
-                                    
+
+                                    <tr *ngFor="let job of jobs; index as i">
+                                        <td>{{ i+1 }}</td>
+                                        <td>{{ job.date}}</td>
+                                        <td>{{ job.title}}</td>
+                                        <td>{{ job.detail}}</td>
+                                        <td>{{ job.nameac}}</td>
+                                        <td>{{ job.type}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-outline-light btn-sm"
+                                                (click)="changeStateJob(job.id.toString(), job.state.toString())">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                    fill="currentColor" class="bi bi-toggles2" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M9.465 10H12a2 2 0 1 1 0 4H9.465c.34-.588.535-1.271.535-2 0-.729-.195-1.412-.535-2z" />
+                                                    <path
+                                                        d="M6 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 1a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm.535-10a3.975 3.975 0 0 1-.409-1H4a1 1 0 0 1 0-2h2.126c.091-.355.23-.69.41-1H4a2 2 0 1 0 0 4h2.535z" />
+                                                    <path d="M14 4a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" />
+                                                </svg>
+                                                &nbsp;
+                                                <!--etiqueta de espacio -->
+                                                <span class="badge bg-success" *ngIf="job.state == 'activo'">{{
+                                                    job.state }}</span>
+                                                <span class="badge bg-danger" *ngIf="job.state == 'inactivo'">{{
+                                                    job.state}}</span>
+                                            </button>
+                                        </td>
+
+                                        <td>{{ job.price |currency : 'Bs.' }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                                data-target="#modalUpdate" (click)="fillUpdateField(job.id.toString())">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                    <path fill-rule="evenodd"
+                                                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                </svg>
+                                            </button>
+                                            &nbsp;
+                                            <!--etiqueta de espacio -->
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                (click)="deleteJobField(job.id.toString())">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                    <path fill-rule="evenodd"
+                                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                </svg>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+
 
                                 </tbody>
                                 <tfoot class="Total">
@@ -63,6 +123,136 @@
                                     </tr>
                                 </tfoot>
                             </table>
+                            <!--form-->
+                            <!--###################MODAL##################-->
+                            <div class="modal fade" id="modalUpdate">
+                                <div class="modal-dialog">
+                                    <div class="modal-content bg-secondary">
+                                        <div class="modal-header ">
+                                            <h4 class="modal-title">Update user</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!--###################formulario##################-->
+                                            <form [formGroup]="formUpdate" (ngSubmit)="updateJob()">
+
+                                                <div class="form-group">
+                                                    <label for="title">Title</label>
+
+                                                    <input type="text"
+                                                        class="form-control form-control-border border-width-2"
+                                                        id="title" name="title" placeholder="Enter a title"
+                                                        formControlName="title" minlength="2">
+                                                    <!--mensajes de validación-->
+                                                    <div
+                                                        *ngIf="formUpdate.get('title')?.errors  && formUpdate.get('title')?.dirty ">
+                                                        <span class="badge bg-danger text-wrap"
+                                                            *ngIf="formUpdate.get('title')?.hasError('required')">
+                                                            {{ messages.msj2 }}</span>
+                                                        &nbsp;
+                                                        <span class="badge bg-danger text-wrap"
+                                                            *ngIf="formUpdate.get('title')?.hasError('minlength')">
+                                                            {{ messages.msj1 }}</span>
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="detail">Detail</label>
+                                                    <input type="text"
+                                                        class="form-control form-control-border border-width-2"
+                                                        id="detail" name="detail" placeholder="Enter a detail"
+                                                        formControlName="detail" minlength="2">
+
+                                                    <!--mensajes de validación-->
+                                                    <div
+                                                        *ngIf="formUpdate.get('detail')?.errors  && formUpdate.get('detail')?.dirty ">
+                                                        <span class="badge bg-danger text-wrap"
+                                                            *ngIf="formUpdate.get('detail')?.hasError('required')">
+                                                            {{ messages.msj2 }}</span>
+                                                        &nbsp;
+                                                        <span class="badge bg-danger text-wrap"
+                                                            *ngIf="formUpdate.get('detail')?.hasError('minlength')">
+                                                            {{ messages.msj1 }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="date">Date</label>
+
+                                                    <input type="datetime"
+                                                        class="form-control form-control-border border-width-2"
+                                                        id="date" name="date" placeholder="Enter a date"
+                                                        formControlName="date">
+
+                                                    <!--mensajes de validación-->
+                                                    <div
+                                                        *ngIf="formUpdate.get('date')?.errors  && formUpdate.get('date')?.dirty ">
+                                                        <span class="badge bg-danger text-wrap"
+                                                            *ngIf="formUpdate.get('date')?.hasError('required')">
+                                                            {{ messages.msj2 }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="price">Price</label>
+                                                    <input type="number"
+                                                        class="form-control form-control-border border-width-2"
+                                                        id="price" name="price" placeholder="Enter a detail"
+                                                        formControlName="price" min="20" max="200" required>
+
+                                                    <!--mensajes de validación-->
+                                                    <div
+                                                        *ngIf="formUpdate.get('price')?.errors  && formUpdate.get('detail')?.dirty ">
+                                                        <span class="badge bg-danger text-wrap"
+                                                            *ngIf="formUpdate.get('price')?.hasError('required')">
+                                                            {{ messages.msj2 }}</span>
+                                                        &nbsp;
+                                                        <span class="badge bg-danger text-wrap"
+                                                            *ngIf="formUpdate.get('price')?.hasError('min') || formUpdate.get('price')?.hasError('max') ">
+                                                            {{ messages.msj3 }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="idtype">Type job</label>
+                                                    <select class="custom-select form-control-border border-width-2"
+                                                        id="idtype" name="idtype" formControlName="idtype">
+                                                        <option value="" disabled>Select a option</option>
+                                                        <option *ngFor="let typeJob of typeJobs_"
+                                                            value="{{ typeJob.id }}">
+                                                            {{ typeJob.name }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="iduser">Select user</label>
+                                                    <select class="custom-select form-control-border border-width-2"
+                                                        id="iduser" name="iduser" formControlName="iduser">
+                                                        <option value="" disabled>Select a option</option>
+                                                        <option *ngFor="let user of users_" value="{{ user.id }}">
+                                                            {{ user.name }} {{ user.lastname }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="modal-footer justify-content-between">
+                                                    <button type="button" class="btn btn-outline-light"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-outline-success"
+                                                        [disabled]="formUpdate.invalid">
+                                                        Save user
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+                                <!-- /.modal -->
+                            </div>
+                            <!--end form-->
+                            <!-- /.modal -->
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -77,3 +267,129 @@
     </section>
     <!-- /.content -->
 </div>
+<!--form-->
+<!--###################MODAL##################-->
+<div class="modal fade" id="modal-secondary">
+    <div class="modal-dialog">
+        <div class="modal-content bg-secondary">
+            <div class="modal-header ">
+                <h4 class="modal-title">Form to add a Job</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--###################formulario##################-->
+                <form [formGroup]="form" (ngSubmit)="createOneJob()">
+
+                    <div class="form-group">
+                        <label for="title">Title</label>
+
+                        <input type="text" class="form-control form-control-border border-width-2" id="title"
+                            name="title" placeholder="Enter a title" formControlName="title" minlength="2">
+                        <!--mensajes de validación-->
+                        <div *ngIf="form.get('title')?.errors  && form.get('title')?.dirty ">
+                            <span class="badge bg-danger text-wrap"
+                                *ngIf="form.get('title')?.hasError('required')">
+                                {{ messages.msj2 }}</span>
+                            &nbsp;
+                            <span class="badge bg-danger text-wrap"
+                                *ngIf="form.get('title')?.hasError('minlength')">
+                                {{ messages.msj1 }}</span>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="detail">Detail</label>
+                        <input type="text" class="form-control form-control-border border-width-2" id="detail"
+                            name="detail" placeholder="Enter a detail" formControlName="detail" minlength="2">
+
+                        <!--mensajes de validación-->
+                        <div *ngIf="form.get('detail')?.errors  && form.get('detail')?.dirty ">
+                            <span class="badge bg-danger text-wrap"
+                                *ngIf="form.get('detail')?.hasError('required')">
+                                {{ messages.msj2 }}</span>
+                            &nbsp;
+                            <span class="badge bg-danger text-wrap"
+                                *ngIf="form.get('detail')?.hasError('minlength')">
+                                {{ messages.msj1 }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date</label>
+
+                        <input type="datetime" class="form-control form-control-border border-width-2" id="date"
+                            name="date" placeholder="Enter a date" formControlName="date">
+
+                        <!--mensajes de validación-->
+                        <div *ngIf="form.get('date')?.errors  && form.get('date')?.dirty ">
+                            <span class="badge bg-danger text-wrap"
+                                *ngIf="form.get('date')?.hasError('required')">
+                                {{ messages.msj2 }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Detail</label>
+                        <input type="number" class="form-control form-control-border border-width-2" id="price"
+                            name="price" placeholder="Enter a detail" formControlName="price" min="20" max="200"
+                            required>
+
+                        <!--mensajes de validación-->
+                        <div *ngIf="form.get('price')?.errors  && form.get('detail')?.dirty ">
+                            <span class="badge bg-danger text-wrap"
+                                *ngIf="form.get('price')?.hasError('required')">
+                                {{ messages.msj2 }}</span>
+                            &nbsp;
+                            <span class="badge bg-danger text-wrap"
+                                *ngIf="form.get('price')?.hasError('min') || form.get('price')?.hasError('max') ">
+                                {{ messages.msj3 }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="idstate">State</label>
+                        <select class="custom-select form-control-border border-width-2" id="idstate" name="idstate"
+                            formControlName="idstate">
+                            <option value="" disabled>Select a option</option>
+                            <option *ngFor="let state of states_" value="{{ state.id }}">
+                                {{ state.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="idtype">Type job</label>
+                        <select class="custom-select form-control-border border-width-2" id="idtype" name="idtype"
+                            formControlName="idtype">
+                            <option value="" disabled>Select a option</option>
+                            <option *ngFor="let typeJob of typeJobs_" value="{{ typeJob.id }}">
+                                {{ typeJob.name }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="iduser">Select user</label>
+                        <select class="custom-select form-control-border border-width-2" id="iduser" name="iduser"
+                            formControlName="iduser">
+                            <option value="" disabled>Select a option</option>
+                            <option *ngFor="let user of users_" value="{{ user.id }}">
+                                {{ user.name }} {{ user.lastname }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-outline-success" [disabled]="form.invalid">
+                            Save user
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</div>
+<!--end form-->
+<!-- /.modal -->

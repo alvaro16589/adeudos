@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { JobsRoutingModule } from './jobs-routing.module';
 import { JobsComponent } from './components/jobs.component';
+//para los formularios
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +13,8 @@ import { JobsComponent } from './components/jobs.component';
   ],
   imports: [
     CommonModule,
-    JobsRoutingModule
+    JobsRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class JobsModule { }
