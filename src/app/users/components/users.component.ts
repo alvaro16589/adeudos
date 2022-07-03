@@ -21,6 +21,12 @@ export class UsersComponent implements OnInit {
   users_: User[] = [];
   typeUsers_: TypeUser[] = [];
   states_: State[] = [];
+  //mensajes
+  messages = {
+    msj1: "Words are missing",
+    msj2: "The field is required",
+    msj3: "Direction emai invalid"
+  }
 
   form = new UntypedFormGroup({
     name: new UntypedFormControl('', [Validators.required, Validators.minLength(2)]),
@@ -28,7 +34,7 @@ export class UsersComponent implements OnInit {
     nameac: new UntypedFormControl('', [Validators.required, Validators.minLength(2)]),
     idtype: new UntypedFormControl('', Validators.required),
     idstate: new UntypedFormControl('', Validators.required),
-    email: new UntypedFormControl('',[ Validators.required,Validators.email]),
+    email: new UntypedFormControl('', [Validators.required, Validators.email, Validators.minLength(5)]),
     password: new UntypedFormControl('', [Validators.required, Validators.minLength(7)]),
 
   });
@@ -37,13 +43,13 @@ export class UsersComponent implements OnInit {
 
   formUpdate = new UntypedFormGroup({
     id: new UntypedFormControl(),
-    name: new UntypedFormControl('', Validators.required),
-    lastname: new UntypedFormControl('', Validators.required),
-    nameac: new UntypedFormControl('', Validators.required),
+    name: new UntypedFormControl('', [Validators.required, Validators.minLength(2)]),
+    lastname: new UntypedFormControl('', [Validators.required, Validators.minLength(2)]),
+    nameac: new UntypedFormControl('', [Validators.required, Validators.minLength(2)]),
     idtype: new UntypedFormControl('', Validators.required),
     idstate: new UntypedFormControl('', Validators.required),
-    email: new UntypedFormControl('', [Validators.required, Validators.email]),
-    password: new UntypedFormControl('', Validators.required),
+    email: new UntypedFormControl('', [Validators.required, Validators.email, Validators.minLength(5)]),
+    password: new UntypedFormControl('', [Validators.required, Validators.minLength(7)]),
   });
 
   userUpdate!: updateUser;
@@ -161,12 +167,12 @@ export class UsersComponent implements OnInit {
       });
   }
 
-  deleteUserField(id : string){
-    if(confirm("Are you sure?, this users will delete.")){
+  deleteUserField(id: string) {
+    if (confirm("Are you sure?, this users will delete.")) {
       this.usersService.deleteUser(id)
-      .subscribe(user => {
-        this.fetchUsers();//after storage items, it back to fill the table
-      });
+        .subscribe(user => {
+          this.fetchUsers();//after storage items, it back to fill the table
+        });
     }
 
   }
