@@ -13,3 +13,12 @@ export interface Job{
     type: string;
     state: string;
 }
+export interface SaveJob{
+    title:string;
+    detail:string;
+    date: string;
+    price: number;
+    idtype: number;
+    iduser: number;
+    idstate: number;
+}

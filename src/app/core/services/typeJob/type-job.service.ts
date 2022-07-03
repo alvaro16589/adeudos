@@ -7,9 +7,10 @@ import { TypeJob } from '../../models/typeJob.model';
   providedIn: 'root'
 })
 export class TypeJobService {
+  uri_jt = "jobtypes";
   constructor(private http: HttpClient
     ) { }
-    getAllStates() {
-      return this.http.get<TypeJob[]>(environment.url_of_api + 'jobtypes');
+    getAllJobTypes() {
+      return this.http.get<TypeJob[]>(environment.url_of_api + this.uri_jt);
     }
 }
