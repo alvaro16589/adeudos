@@ -180,7 +180,7 @@
                                                 <div class="form-group">
                                                     <label for="date">Date</label>
 
-                                                    <input type="datetime"
+                                                    <input type="date"
                                                         class="form-control form-control-border border-width-2"
                                                         id="date" name="date" placeholder="Enter a date"
                                                         formControlName="date">
@@ -289,13 +289,13 @@
                             name="title" placeholder="Enter a title" formControlName="title" minlength="2">
                         <!--mensajes de validación-->
                         <div *ngIf="form.get('title')?.errors  && form.get('title')?.dirty ">
-                            <span class="badge bg-danger text-wrap"
-                                *ngIf="form.get('title')?.hasError('required')">
-                                {{ messages.msj2 }}</span>
+                            <span class="badge bg-danger text-wrap" *ngIf="form.get('title')?.hasError('required')">
+                                {{ messages.msj2 }}
+                            </span>
                             &nbsp;
-                            <span class="badge bg-danger text-wrap"
-                                *ngIf="form.get('title')?.hasError('minlength')">
-                                {{ messages.msj1 }}</span>
+                            <span class="badge bg-danger text-wrap" *ngIf="form.get('title')?.hasError('minlength')">
+                                {{ messages.msj1 }}
+                            </span>
                         </div>
 
                     </div>
@@ -306,26 +306,24 @@
 
                         <!--mensajes de validación-->
                         <div *ngIf="form.get('detail')?.errors  && form.get('detail')?.dirty ">
-                            <span class="badge bg-danger text-wrap"
-                                *ngIf="form.get('detail')?.hasError('required')">
+                            <span class="badge bg-danger text-wrap" *ngIf="form.get('detail')?.hasError('required')">
                                 {{ messages.msj2 }}</span>
                             &nbsp;
-                            <span class="badge bg-danger text-wrap"
-                                *ngIf="form.get('detail')?.hasError('minlength')">
+                            <span class="badge bg-danger text-wrap" *ngIf="form.get('detail')?.hasError('minlength')">
                                 {{ messages.msj1 }}</span>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group " id="datepicker" >
                         <label for="date">Date</label>
 
-                        <input type="datetime" class="form-control form-control-border border-width-2" id="date"
-                            name="date" placeholder="Enter a date" formControlName="date">
-
+                        <input type="date" class="form-control form-control-border border-width-2" id="date"
+                            name="date" placeholder="Enter a date"
+                            formControlName="date" />
                         <!--mensajes de validación-->
                         <div *ngIf="form.get('date')?.errors  && form.get('date')?.dirty ">
-                            <span class="badge bg-danger text-wrap"
-                                *ngIf="form.get('date')?.hasError('required')">
-                                {{ messages.msj2 }}</span>
+                            <span class="badge bg-danger text-wrap" *ngIf="form.get('date')?.hasError('required')">
+                                {{ messages.msj2 }}
+                            </span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -336,8 +334,7 @@
 
                         <!--mensajes de validación-->
                         <div *ngIf="form.get('price')?.errors  && form.get('detail')?.dirty ">
-                            <span class="badge bg-danger text-wrap"
-                                *ngIf="form.get('price')?.hasError('required')">
+                            <span class="badge bg-danger text-wrap" *ngIf="form.get('price')?.hasError('required')">
                                 {{ messages.msj2 }}</span>
                             &nbsp;
                             <span class="badge bg-danger text-wrap"
