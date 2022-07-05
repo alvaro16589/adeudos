@@ -35,7 +35,7 @@ export class JobsComponent implements OnInit {
     title: new UntypedFormControl('', [Validators.required, Validators.minLength(2)]),
     detail: new UntypedFormControl('', [Validators.required, Validators.minLength(2)]),
     date: new UntypedFormControl('', Validators.required),
-    price: new UntypedFormControl('20', [Validators.required, Validators.min(20), Validators.max(200)]),
+    price: new UntypedFormControl('50', [Validators.required, Validators.min(20), Validators.max(200)]),
     idtype: new UntypedFormControl('', Validators.required),
     iduser: new UntypedFormControl('', Validators.required),
     idstate: new UntypedFormControl('', Validators.required),
@@ -78,7 +78,7 @@ export class JobsComponent implements OnInit {
         this.total = this.jobs.reduce((
           acc,
           obj,
-        ) => acc + obj.price, 0);
+        ) => (obj.state == "activo")?acc + obj.price: acc + 0,0);
 
       });
   }
@@ -186,5 +186,8 @@ export class JobsComponent implements OnInit {
         this.fetchJobs();//after storage items, it back to fill the table
       });
   }
-
+  ///########################################## FILTERS ##############################################################
+  filterForUser(){
+    console.log("hola");
+  }
 }

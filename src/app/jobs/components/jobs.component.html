@@ -23,8 +23,8 @@
                                 <div class="col col-md-2">
                                     <h3 class="card-title">Works done</h3>
                                 </div>
-                                <div class="col col-md-9">
-
+                                <div class="col col-md-9 text-align-end">
+                                    &nbsp;
                                 </div>
                                 <div class="col col-md-1">
                                     <!--boton del modal para agregar registros-->
@@ -313,12 +313,11 @@
                                 {{ messages.msj1 }}</span>
                         </div>
                     </div>
-                    <div class="form-group " id="datepicker" >
+                    <div class="form-group " id="datepicker">
                         <label for="date">Date</label>
 
-                        <input type="date" class="form-control form-control-border border-width-2" id="date"
-                            name="date" placeholder="Enter a date"
-                            formControlName="date" />
+                        <input type="date" class="form-control form-control-border border-width-2" id="date" name="date"
+                            placeholder="Enter a date" formControlName="date" />
                         <!--mensajes de validación-->
                         <div *ngIf="form.get('date')?.errors  && form.get('date')?.dirty ">
                             <span class="badge bg-danger text-wrap" *ngIf="form.get('date')?.hasError('required')">
@@ -327,7 +326,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="price">Detail</label>
+                        <label for="price">Price</label>
                         <input type="number" class="form-control form-control-border border-width-2" id="price"
                             name="price" placeholder="Enter a detail" formControlName="price" min="20" max="200"
                             required>
