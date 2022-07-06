@@ -42,8 +42,6 @@ export class JobsComponent implements OnInit {
 
   });
 
-  newJob!: SaveJob;
-
   formUpdate = new UntypedFormGroup({
     id: new UntypedFormControl(),
     title: new UntypedFormControl('', [Validators.required, Validators.minLength(2)]),
@@ -55,7 +53,10 @@ export class JobsComponent implements OnInit {
     idstate: new UntypedFormControl('', Validators.required),
   });
 
-  jobUpdate!: SaveJob;
+formFilter = new UntypedFormGroup({
+  iduser: new UntypedFormControl('',Validators.required),
+  state: new UntypedFormControl(''),
+});
 
   constructor(
     private jobsService: JobsService,
@@ -188,6 +189,6 @@ export class JobsComponent implements OnInit {
   }
   ///########################################## FILTERS ##############################################################
   filterForUser(){
-    console.log("hola");
+    console.log(this.formFilter.value.iduser.toString());
   }
 }
