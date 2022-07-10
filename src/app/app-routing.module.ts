@@ -28,14 +28,15 @@ const routes: Routes = [
         path: 'jobs',
         loadChildren: () => import('./jobs/jobs.module').then(m => m.JobsModule)
       },
+      {
+        path: 'others',
+        loadChildren: () => import('./others/others.module').then(m => m.OthersModule)
+      }
     ]
-
-
   },
   {
     path: '**',
     loadChildren: () => import('./notFound/not-found.module').then(m => m.NotFoundModule)
-
   }
 
 ];
