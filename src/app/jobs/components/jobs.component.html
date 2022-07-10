@@ -19,54 +19,85 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <div class="row">
-                                <div class="col col-md-2">
-                                    <h3 class="card-title">Works done</h3>
-                                </div>
-                                <div class="col col-md-9 text-align-end">
-                                    <!--###################formulario##################-->
-                                    <form [formGroup]="formFilter" (ngSubmit)="filterForUser()">
-                                        <div class="form-group">
-                                            <label for="iduser">Select user</label>
-                                            <select class="custom-select form-control-border border-width-2" id="iduser"
-                                                name="iduser" formControlName="iduser">
-                                                <option value="" disabled>Select a option</option>
-                                                <option *ngFor="let user of users_" value="{{ user.id }}">
-                                                    {{ user.name }} {{ user.lastname }}
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-radio">
-                                                <input class="custom-control-input" type="radio" id="state" value="0" />
-                                                <label for="customCheckbox1" class="custom-control-label">Both</label>
-                                            </div>
-                                            <div class="custom-control custom-radio">
-                                                <input class="custom-control-input" type="radio" id="state1"
-                                                    value="1" />
-                                                <label for="customCheckbox1" class="custom-control-label">Active</label>
-                                            </div>
-                                            <div class="custom-control custom-radio">
-                                                <input class="custom-control-input" type="radio" id="state2"
-                                                    value="2" />
-                                                <label for="customCheckbox1"
-                                                    class="custom-control-label">Inactive</label>
-                                            </div>
-                                        </div>
 
-                                        <button class="btn btn-outline-info" type="submit"
-                                            [disabled]="formFilter.invalid">Filter</button>
-                                    </form>
-                                    <!--################### end formulario ##################-->
+                            <h3 class="card-title">Works done</h3>
+                            
+                            <div class="card-tools">
+                                <!--card filters-->
+                                <div class="card card-sm">
+                                    <div class="card-header border-0">
+                                        <h5 class="card-title">
+                                            Filters
+                                        </h5>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <!-- card tools -->
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-primary btn-sm"
+                                                data-card-widget="collapse" title="Collapse" (click)="fetchJobs()">
+                                                <i class="fas fa-minus" ></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.card-tools -->
+                                    </div>
+                                    <!--card body-->
+                                    <div class="card-body collapse">
+                                        <!--###################formulario##################-->
+                                        <form [formGroup]="formFilter" (ngSubmit)="filterForUser()">
+                                            <div class="row">
+                                                <div class="col col-6">
+                                                    <div class="form-group">
+                                                        <label for="iduser">Select user</label>
+                                                        <select class="custom-select form-control-border border-width-2"
+                                                            id="iduser" name="iduser" formControlName="iduser">
+                                                            <option value="" disabled>Select a option</option>
+                                                            <option value="0">All</option>
+                                                            <option *ngFor="let user of users_" value="{{ user.id }}">
+                                                                {{ user.name }} {{ user.lastname }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col col-6">
+                                                    <label class="custom-control">
+                                                        Select state
+                                                    </label>
+                                                    <div class="form-group">
+                                                        <div class="custom-control custom-radio">
+                                                            <input class="custom-control-input" type="radio" id="state1"
+                                                                name="state" value="0" formControlName="state">
+                                                            <label for="state1" class="custom-control-label">
+                                                                All</label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio">
+                                                            <input class="custom-control-input" type="radio" id="state2"
+                                                                name="state" value="1" formControlName="state">
+                                                            <label for="state2" class="custom-control-label">
+                                                                Active</label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio">
+                                                            <input class="custom-control-input" type="radio" id="state3"
+                                                                name="state" value="2" formControlName="state">
+                                                            <label for="state3" class="custom-control-label">
+                                                                Inactive</label>
+                                                        </div>
+                                                    </div>
+                                                    <button class="btn btn-outline-info" type="submit"
+                                                        [disabled]="formFilter.invalid">Filter</button>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                        <!--################### end formulario ##################-->
+                                    </div>
+                                    <!-- /.card-body-->
                                 </div>
-                                <div class="col col-md-1">
-                                    <!--boton del modal para agregar registros-->
-                                    <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                                        data-target="#modal-secondary">
-                                        Add
-                                        <span class="fa fa-plus"></span>
-                                    </button>
-                                </div>
+                                <!--boton del modal para agregar registros-->
+                                <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal"
+                                    data-target="#modal-secondary">
+                                    Add
+                                    <span class="fa fa-plus"></span>
+                                </button>
                             </div>
                         </div>
                         <!-- /.card-header -->

@@ -53,10 +53,10 @@ export class JobsComponent implements OnInit {
     idstate: new UntypedFormControl('', Validators.required),
   });
 
-formFilter = new UntypedFormGroup({
-  iduser: new UntypedFormControl('',Validators.required),
-  state: new UntypedFormControl(''),
-});
+  formFilter = new UntypedFormGroup({
+    iduser: new UntypedFormControl('', Validators.required),
+    state: new UntypedFormControl('checked'),
+  });
 
   constructor(
     private jobsService: JobsService,
@@ -79,7 +79,7 @@ formFilter = new UntypedFormGroup({
         this.total = this.jobs.reduce((
           acc,
           obj,
-        ) => (obj.state == "activo")?acc + obj.price: acc + 0,0);
+        ) => (obj.state == "activo") ? acc + obj.price : acc + 0, 0);
 
       });
   }
@@ -168,7 +168,7 @@ formFilter = new UntypedFormGroup({
     for (let index = 0; index < this.jobs.length; index++) {
       if (id_ == this.jobs[index].id.toString()) {
         this.formUpdate.patchValue({
-          id:this.jobs[index].id,
+          id: this.jobs[index].id,
           title: this.jobs[index].title,
           detail: this.jobs[index].detail,
           date: this.jobs[index].date,
@@ -180,7 +180,7 @@ formFilter = new UntypedFormGroup({
       }
 
     }
-    
+
 
     this.jobsService.updateJob(id_, this.formUpdate.value)
       .subscribe(user => {
@@ -188,7 +188,108 @@ formFilter = new UntypedFormGroup({
       });
   }
   ///########################################## FILTERS ##############################################################
-  filterForUser(){
-    console.log(this.formFilter.value.iduser.toString());
+  filterForUser() {
+    //console.log(this.formFilter.value.iduser.toString() + "  -----  " + this.formFilter.value.state.toString() );
+
+    switch (this.formFilter.value.state) {
+      case "0":
+        if (this.formFilter.value.iduser == 0) {
+          this.fetchJobs();
+        } else {
+          this.filterFix(this.formFilter.value.iduser.toString(), "0");
+        }
+
+        break;
+      case "1":
+        if (this.formFilter.value.iduser == 0) {
+          this.filterByState(this.formFilter.value.state);
+        } else{
+          this.filterFix(this.formFilter.value.iduser.toString(), "1");
+        }
+        
+        break;
+      default:
+        if (this.formFilter.value.iduser == 0) {
+          this.filterByState(this.formFilter.value.state);
+        } else{
+          this.filterFix(this.formFilter.value.iduser.toString(), "2");
+        }
+        break;
+    }
+
   }
+
+  filterFix(idUser: string, state: string) {
+    this.jobsService.getAllJobs()
+      .subscribe(jobs => {
+
+        let element: Job[] = [];
+        let cont = 0;
+
+        if (state == "0") {
+          for (let index = 0; index < jobs.length; index++) {
+            if (jobs[index].iduser.toString() == idUser) {
+              element[cont] = jobs[index];
+              cont++;
+            }
+
+          }
+
+          this.jobs = element;
+
+          //Calculamos el TOTAL 
+          this.total = this.jobs.reduce((
+            acc,
+            obj,
+          ) => acc + obj.price, 0);
+        } else {
+          for (let index = 0; index < jobs.length; index++) {
+            if (jobs[index].iduser.toString() == idUser && jobs[index].idstate.toString() == state) {
+              element[cont] = jobs[index];
+              cont++;
+            }
+
+          }
+
+          this.jobs = element;
+          //Calculamos el TOTAL 
+          this.total = this.jobs.reduce((
+            acc,
+            obj,
+          ) => acc + obj.price, 0);
+        }
+
+
+      });
+  }
+
+  filterByState(state: any) {
+    this.jobsService.getAllJobs()
+      .subscribe(jobs => {
+
+        let element: Job[] = [];
+        let cont = 0;
+
+        
+          for (let index = 0; index < jobs.length; index++) {
+            if (jobs[index].idstate.toString() == state) {
+              element[cont] = jobs[index];
+              cont++;
+            }
+
+          }
+
+          this.jobs = element;
+
+          //Calculamos el TOTAL 
+          this.total = this.jobs.reduce((
+            acc,
+            obj,
+          ) => acc + obj.price, 0);
+        
+
+      });
+  }
+
 }
+
