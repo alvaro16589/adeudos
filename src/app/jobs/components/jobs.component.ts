@@ -218,7 +218,7 @@ export class JobsComponent implements OnInit {
     }
 
   }
-
+//buscar usuarios segun su id y su estado
   filterFix(idUser: string, state: string) {
     this.jobsService.getAllJobs()
       .subscribe(jobs => {
@@ -262,7 +262,7 @@ export class JobsComponent implements OnInit {
 
       });
   }
-
+  //mostrar todos los usuarios segun su estado 0(all)-1(active)-2(inactive)
   filterByState(state: any) {
     this.jobsService.getAllJobs()
       .subscribe(jobs => {

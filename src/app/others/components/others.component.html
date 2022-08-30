@@ -31,9 +31,172 @@
                                                 <h3 class="card-title">
                                                     Type jobs
                                                 </h3>
+                                                <div class="card-tools">
+                                                    <!--boton del modal para agregar registros-->
+                                                    <button type="button" class="btn btn-outline-primary btn-sm"
+                                                        data-toggle="modal" data-target="#modal-secondary">
+                                                        Add
+                                                        <span class="fa fa-plus"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <table id="index" name="index" class="table table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>N°</th>
+                                                            <th>name</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <tr *ngFor="let type of typeJobs_; index as i">
+                                                            <td>{{ i+1 }}</td>
+                                                            <td>{{ type.name}}</td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-warning btn-sm"
+                                                                    data-toggle="modal" data-target="#modalUpdate"
+                                                                    (click)="fillUpdateFieldTypeJob(type.id.toString())">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                        height="16" fill="currentColor"
+                                                                        class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                        <path fill-rule="evenodd"
+                                                                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                                    </svg>
+                                                                </button>
+                                                                &nbsp;
+                                                                <!--etiqueta de espacio -->
+                                                                <button type="button" class="btn btn-danger btn-sm"
+                                                                    (click)="deleteJobType(type.id.toString())">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                        height="16" fill="currentColor"
+                                                                        class="bi bi-trash" viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                                        <path fill-rule="evenodd"
+                                                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                                    </svg>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <!--form-->
+                                                <!--###################MODAL##################-->
+                                                <div class="modal fade" id="modalUpdate">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content bg-secondary">
+                                                            <div class="modal-header ">
+                                                                <h4 class="modal-title">Update Type Job</h4>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <!--###################formulario##################-->
+                                                                <form [formGroup]="formUpdate"
+                                                                    (ngSubmit)="updateJobType()">
+
+                                                                    <div class="form-group">
+                                                                        <label for="name">Name</label>
+
+                                                                        <input type="text"
+                                                                            class="form-control form-control-border border-width-2"
+                                                                            id="name" name="name"
+                                                                            placeholder="Enter a name"
+                                                                            formControlName="name" minlength="3">
+                                                                        <!--mensajes de validación-->
+                                                                        <div
+                                                                            *ngIf="formUpdate.get('name')?.errors  && formUpdate.get('name')?.dirty ">
+                                                                            <span class="badge bg-danger text-wrap"
+                                                                                *ngIf="formUpdate.get('name')?.hasError('required')">
+                                                                                {{ messages.msj2 }}</span>
+                                                                            &nbsp;
+                                                                            <span class="badge bg-danger text-wrap"
+                                                                                *ngIf="formUpdate.get('name')?.hasError('minlength')">
+                                                                                {{ messages.msj1 }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer justify-content-between">
+                                                                        <button type="button"
+                                                                            class="btn btn-outline-light"
+                                                                            data-dismiss="modal">Close</button>
+                                                                        <button type="submit"
+                                                                            class="btn btn-outline-success"
+                                                                            [disabled]="formUpdate.invalid">
+                                                                            Save
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            <!-- /.modal-content -->
+                                                        </div>
+                                                        <!-- /.modal-dialog -->
+                                                    </div>
+                                                    <!-- /.modal -->
+                                                </div>
+                                                <!--end form-->
+                                                <!-- /.modal -->
                                             </div>
                                         </div>
                                         <!--End Type jobs card-->
+                                        <!--form-->
+                                        <!--###################MODAL##################-->
+                                        <div class="modal fade" id="modal-secondary">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content bg-secondary">
+                                                    <div class="modal-header ">
+                                                        <h4 class="modal-title">Form to add a Job type</h4>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <!--###################formulario##################-->
+                                                        <form [formGroup]="form" (ngSubmit)="createJobType()">
+
+                                                            <div class="form-group">
+                                                                <label for="name">Name</label>
+
+                                                                <input type="text"
+                                                                    class="form-control form-control-border border-width-2"
+                                                                    id="name" name="name" placeholder="Enter a name"
+                                                                    formControlName="name" minlength="3">
+                                                                <!--mensajes de validación-->
+                                                                <div
+                                                                    *ngIf="form.get('name')?.errors  && form.get('name')?.dirty ">
+                                                                    <span class="badge bg-danger text-wrap"
+                                                                        *ngIf="form.get('name')?.hasError('required')">
+                                                                        {{ messages.msj2 }}</span>
+                                                                    &nbsp;
+                                                                    <span class="badge bg-danger text-wrap"
+                                                                        *ngIf="form.get('name')?.hasError('minlength')">
+                                                                        {{ messages.msj1 }}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer justify-content-between">
+                                                                <button type="button" class="btn btn-outline-light"
+                                                                    data-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-outline-success"
+                                                                    [disabled]="form.invalid">
+                                                                    Save
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <!-- /.modal-content -->
+                                                </div>
+                                                <!-- /.modal-dialog -->
+                                            </div>
+                                            <!-- /.modal -->
+                                        </div>
+                                        <!--end form-->
+                                        <!-- /.modal -->
                                     </div>
                                     <div class="col col-sm-12 col-md-12 col-xl-6">
                                         <!--Type users card-->
@@ -42,9 +205,174 @@
                                                 <h3 class="card-title">
                                                     Type users
                                                 </h3>
+                                                <div class="card-tools">
+                                                    <!--boton del modal para agregar registros-->
+                                                    <button type="button" class="btn btn-outline-primary btn-sm"
+                                                        data-toggle="modal" data-target="#modal-secondary2">
+                                                        Add
+                                                        <span class="fa fa-plus"></span>
+                                                    </button>
+                                                </div>
                                             </div>
+                                            <div class="card-body">
+                                                <!--tabla de tipos de usuarios-->
+                                                <table id="index" class="table table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>N°</th>
+                                                            <th>name</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <tr *ngFor="let typeU of typeUsers_; index as i">
+                                                            <td>{{ i+1 }}</td>
+                                                            <td>{{ typeU.name}}</td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-warning btn-sm"
+                                                                data-toggle="modal" data-target="#modalUpdate2"
+                                                                (click)="fillUpdateFieldTypeUser(typeU.id.toString())">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                    height="16" fill="currentColor"
+                                                                    class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                    <path fill-rule="evenodd"
+                                                                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                                </svg>
+                                                            </button>
+                                                            &nbsp;
+                                                            <!--etiqueta de espacio -->
+                                                            <button type="button" class="btn btn-danger btn-sm"
+                                                                (click)="deleteTypeUser(typeU.id.toString())">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                    height="16" fill="currentColor"
+                                                                    class="bi bi-trash" viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                                    <path fill-rule="evenodd"
+                                                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                                </svg>
+                                                            </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <!--fin tabla-->
+                                                <!--form-->
+                                                <!--###################MODAL##################-->
+                                                <div class="modal fade" id="modalUpdate2">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content bg-secondary">
+                                                            <div class="modal-header ">
+                                                                <h4 class="modal-title">Update Type User</h4>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <!--###################formulario##################-->
+                                                                <form [formGroup]="formUpdate" (ngSubmit)="updateTypeUser()">
+
+                                                                    <div class="form-group">
+                                                                        <label for="name">Name</label>
+
+                                                                        <input type="text"
+                                                                            class="form-control form-control-border border-width-2"
+                                                                            id="name" name="name"
+                                                                            placeholder="Enter a name"
+                                                                            formControlName="name" minlength="3">
+                                                                        <!--mensajes de validación-->
+                                                                        <div
+                                                                            *ngIf="formUpdate.get('name')?.errors  && formUpdate.get('name')?.dirty ">
+                                                                            <span class="badge bg-danger text-wrap"
+                                                                                *ngIf="formUpdate.get('name')?.hasError('required')">
+                                                                                {{ messages.msj2 }}</span>
+                                                                            &nbsp;
+                                                                            <span class="badge bg-danger text-wrap"
+                                                                                *ngIf="formUpdate.get('name')?.hasError('minlength')">
+                                                                                {{ messages.msj1 }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer justify-content-between">
+                                                                        <button type="button"
+                                                                            class="btn btn-outline-light"
+                                                                            data-dismiss="modal">Close</button>
+                                                                        <button type="submit"
+                                                                            class="btn btn-outline-success"
+                                                                            [disabled]="formUpdate.invalid">
+                                                                            Save
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            <!-- /.modal-content -->
+                                                        </div>
+                                                        <!-- /.modal-dialog -->
+                                                    </div>
+                                                    <!-- /.modal -->
+                                                </div>
+                                                <!--end form-->
+                                                <!-- /.modal -->
+                                            </div>
+
                                         </div>
                                         <!--End Type users card-->
+                                        <!--form-->
+                                        <!--###################MODAL##################-->
+                                        <div class="modal fade" id="modal-secondary2">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content bg-secondary">
+                                                    <div class="modal-header ">
+                                                        <h4 class="modal-title">Form to add a type User</h4>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <!--###################formulario##################-->
+                                                        <form [formGroup]="form" (ngSubmit)="createTypeUser()">
+
+                                                            <div class="form-group">
+                                                                <label for="name">Name</label>
+
+                                                                <input type="text"
+                                                                    class="form-control form-control-border border-width-2"
+                                                                    id="name" name="name" placeholder="Enter a name"
+                                                                    formControlName="name" minlength="3">
+                                                                <!--mensajes de validación-->
+                                                                <div
+                                                                    *ngIf="form.get('name')?.errors  && form.get('name')?.dirty ">
+                                                                    <span class="badge bg-danger text-wrap"
+                                                                        *ngIf="form.get('name')?.hasError('required')">
+                                                                        {{ messages.msj2 }}</span>
+                                                                    &nbsp;
+                                                                    <span class="badge bg-danger text-wrap"
+                                                                        *ngIf="form.get('name')?.hasError('minlength')">
+                                                                        {{ messages.msj1 }}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer justify-content-between">
+                                                                <button type="button" class="btn btn-outline-light"
+                                                                    data-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-outline-success"
+                                                                    [disabled]="form.invalid">
+                                                                    Save
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <!-- /.modal-content -->
+                                                </div>
+                                                <!-- /.modal-dialog -->
+                                            </div>
+                                            <!-- /.modal -->
+                                        </div>
+                                        <!--end form-->
+                                        <!-- /.modal -->
                                     </div>
                                 </div>
                             </div>

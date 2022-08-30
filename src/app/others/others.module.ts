@@ -4,6 +4,10 @@ import { CommonModule } from '@angular/common';
 import { OthersRoutingModule } from './others-routing.module';
 import { OthersComponent } from './components/others.component';
 
+//para los formularios
+import { ReactiveFormsModule } from '@angular/forms';
+
+
 
 @NgModule({
   declarations: [
@@ -11,7 +15,8 @@ import { OthersComponent } from './components/others.component';
   ],
   imports: [
     CommonModule,
-    OthersRoutingModule
+    OthersRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class OthersModule { }

@@ -34,10 +34,15 @@ const routes: Routes = [
       }
     ]
   },
+  
+  {
+    path: 'login',
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+  },
   {
     path: '**',
     loadChildren: () => import('./notFound/not-found.module').then(m => m.NotFoundModule)
-  }
+  },
 
 ];
 
