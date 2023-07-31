@@ -113,21 +113,32 @@
                                         <th>Type</th>
                                         <th>State</th>
                                         <th>Price</th>
-                                        <th>Actions</th>
+                                        <th *ngIf="userLogin.type ==='root'">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr *ngFor="let job of jobs; index as i">
                                         <td>{{ i+1 }}</td>
-                                        <td>{{ job.date}}</td>
+                                        <td>{{ job.date|date}}</td>
                                         <td>{{ job.title}}</td>
                                         <td>{{ job.detail}}</td>
-                                        <td>{{ job.nameac}}</td>
+                                        <td>{{ job.name + " " + job.lastname}}</td>
                                         <td>{{ job.type}}</td>
                                         <td>
+                                            <div *ngIf="userLogin.type === 'invite'">
+                                                <span class="badge bg-success" *ngIf="job.idstate == 1">
+                                                    {{ job.state }}
+                                                </span>
+                                                <span class="badge bg-danger" *ngIf="job.idstate == 2">
+                                                    {{ job.state }}
+                                                </span>
+
+                                            </div>
+                                            
+
                                             <button type="button" class="btn btn-outline-light btn-sm"
-                                                (click)="changeStateJob(job.id.toString(), job.state.toString())">
+                                                (click)="changeStateJob(job.id.toString(), job.idstate)" *ngIf="userLogin.type === 'root'">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                     fill="currentColor" class="bi bi-toggles2" viewBox="0 0 16 16">
                                                     <path
@@ -138,15 +149,18 @@
                                                 </svg>
                                                 &nbsp;
                                                 <!--etiqueta de espacio -->
-                                                <span class="badge bg-success" *ngIf="job.state == 'activo'">{{
-                                                    job.state }}</span>
-                                                <span class="badge bg-danger" *ngIf="job.state == 'inactivo'">{{
-                                                    job.state}}</span>
+                                                <span class="badge bg-success" *ngIf="job.idstate == 1">
+                                                    {{ job.state }}
+                                                </span>
+                                                <span class="badge bg-danger" *ngIf="job.idstate == 2">
+                                                    {{ job.state }}
+                                                </span>
                                             </button>
                                         </td>
 
                                         <td>{{ job.price |currency : 'Bs.' }}</td>
-                                        <td>
+                                        <!-- columm actions -->
+                                        <td *ngIf="userLogin.type==='root'">
                                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                                 data-target="#modalUpdate" (click)="fillUpdateField(job.id.toString())">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -188,7 +202,7 @@
                                 </tfoot>
                             </table>
                             <!--form-->
-                            <!--###################MODAL##################-->
+                            <!--###################     MODAL   UPDATE       ##################-->
                             <div class="modal fade" id="modalUpdate">
                                 <div class="modal-dialog">
                                     <div class="modal-content bg-secondary">
@@ -244,10 +258,8 @@
                                                 <div class="form-group">
                                                     <label for="date">Date</label>
 
-                                                    <input type="date"
-                                                        class="form-control form-control-border border-width-2"
-                                                        id="date" name="date" placeholder="Enter a date"
-                                                        formControlName="date">
+                                                    <input type="date" class="form-control form-control-border border-width-2"
+                                                        id="date" formControlName="date">
 
                                                     <!--mensajes de validación-->
                                                     <div

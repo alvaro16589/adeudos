@@ -8,8 +8,7 @@ import { NotFoundModule } from './notFound/not-found.module';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
-
-
+import {CookieService} from 'ngx-cookie-service';
 
 
 
@@ -23,10 +22,6 @@ import { CoreModule } from './core/core.module';
     AppComponent,
     LayoutComponent,
     
-    
-    
-    
-    
   ],
   imports: [
     BrowserModule,
@@ -36,7 +31,7 @@ import { CoreModule } from './core/core.module';
     HttpClientModule,
     CoreModule,
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

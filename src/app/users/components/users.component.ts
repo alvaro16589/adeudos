@@ -136,33 +136,17 @@ export class UsersComponent implements OnInit {
     }
 
   }
-  changeStateUser(id_: string, state: string) {
+  changeStateUser(id_: string, idstate: number) {
 
-    var ch = 0;
-    if (state == "activo") {
-      ch = 2;
+    if (idstate === 1) {
+      idstate = 2;
     } else {
-      ch = 1;
+      idstate = 1;
     }
-    for (let index = 0; index < this.users_.length; index++) {
-      if (id_ == this.users_[index].id.toString()) {
-        this.formUpdate.patchValue({
-          id: this.users_[index].id,
-          name: this.users_[index].name,
-          lastname: this.users_[index].lastname,
-          nameac: this.users_[index].nameac,
-          idtype: this.users_[index].idtype,
-          idstate: ch,
-          email: this.users_[index].email,
-          password: this.users_[index].password,
-        })
-      }
 
-    }
-    this.userUpdate = this.formUpdate.value;
-
-    this.usersService.updateUser(id_, this.userUpdate)
+    this.usersService.updateUser(id_, { idstate: idstate })
       .subscribe(user => {
+
         this.fetchUsers();//after storage items, it back to fill the table
       });
   }

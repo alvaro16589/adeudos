@@ -1,13 +1,25 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout/components/layout.component';
+import { SessionAllowGuard } from './core/guards/session-allow.guard';
+import { IsRootGuard } from './core/guards/isRoot/is-root.guard';
 
 
 
 
 const routes: Routes = [
   {
+    path:'',
+    redirectTo:'login',
+    pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+  },
+  {
     path: '',
+    canActivate: [SessionAllowGuard],
     component: LayoutComponent,
     children: [
       {
@@ -21,6 +33,7 @@ const routes: Routes = [
       },
       {
         path: 'users',
+        canActivate: [IsRootGuard],
         loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
       },
 
@@ -30,15 +43,13 @@ const routes: Routes = [
       },
       {
         path: 'others',
+        canActivate: [IsRootGuard],
         loadChildren: () => import('./others/others.module').then(m => m.OthersModule)
       }
     ]
   },
   
-  {
-    path: 'login',
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
-  },
+  
   {
     path: '**',
     loadChildren: () => import('./notFound/not-found.module').then(m => m.NotFoundModule)

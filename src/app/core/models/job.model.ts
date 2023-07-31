@@ -1,7 +1,7 @@
-export interface Job{
+export interface Job {
     id: number;
-    title:string;
-    detail:string;
+    title: string;
+    detail: string;
     date: string;
     price: number;
     idtype: number;
@@ -9,13 +9,15 @@ export interface Job{
     idstate: number;
     created_at: string;
     updated_at: string;
-    nameac: string;
     type: string;
+    name: string;
+    lastname: string;
     state: string;
+
 }
-export interface SaveJob{
-    title:string;
-    detail:string;
+export interface SaveJob {
+    title: string;
+    detail: string;
     date: string;
     price: number;
     idtype: number;

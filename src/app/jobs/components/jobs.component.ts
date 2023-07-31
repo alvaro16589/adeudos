@@ -6,7 +6,7 @@ import { State } from 'src/app/core/models/state.model';
 //trabajar con formularios
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 //
-import { User } from 'src/app/core/models/user.model';
+import { User, UserLogin } from 'src/app/core/models/user.model';
 import { TypeJobService } from 'src/app/core/services/typeJob/type-job.service';
 import { StateService } from 'src/app/core/services/state/state.service';
 import { UsersService } from 'src/app/core/services/users/users.service';
@@ -19,6 +19,7 @@ import { UsersService } from 'src/app/core/services/users/users.service';
   styleUrls: ['./jobs.component.css']
 })
 export class JobsComponent implements OnInit {
+  userLogin!: UserLogin;
   jobs: Job[] = [];
   total = 0;
   typeJobs_: TypeJob[] = [];
@@ -66,20 +67,26 @@ export class JobsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.usersService.currentUserData.subscribe({
+      next:(valor)=>{
+        this.userLogin = valor[0];
+      }
+    });
     this.fetchJobs();
     this.fetchStates();
     this.fetchTypeJobs();
     this.fetchUsers();
   }
+
   fetchJobs() {
     this.jobsService.getAllJobs()
       .subscribe(jobs => {
         this.jobs = jobs;
         //Calculamos el TOTAL 
-        this.total = this.jobs.reduce((
+        this.total = jobs.reduce((
           acc,
           obj,
-        ) => (obj.state == "activo") ? acc + obj.price : acc + 0, 0);
+        ) => (obj.idstate === 1) ? acc + obj.price : acc + 0, 0);
 
       });
   }
@@ -99,7 +106,6 @@ export class JobsComponent implements OnInit {
   }
 
   fetchStates() {
-
     this.stateService.getAllStates()
       .subscribe(states => {
         this.states_ = states;
@@ -119,7 +125,12 @@ export class JobsComponent implements OnInit {
   }
 
   updateJob() {
-
+    
+    const dateUpdate:string = this.formUpdate.value.date;
+    if (dateUpdate.length>10) {
+      this.formUpdate.patchValue({date:dateUpdate.substring(0,10)});
+    }
+    
     this.jobsService.updateJob(this.formUpdate.value.id, this.formUpdate.value)
       .subscribe(user => {
 
@@ -140,49 +151,36 @@ export class JobsComponent implements OnInit {
   }
 
   fillUpdateField(id: string) {
-    for (let index = 0; index < this.jobs.length; index++) {
-      if (id == this.jobs[index].id.toString()) {
-        this.formUpdate.patchValue({
-          id: this.jobs[index].id,
-          title: this.jobs[index].title,
-          detail: this.jobs[index].detail,
-          date: this.jobs[index].date,
-          price: this.jobs[index].price,
-          idtype: this.jobs[index].idtype,
-          iduser: this.jobs[index].iduser,
-          idstate: this.jobs[index].idstate
-        })
-      }
-
+    const jobs = this.jobs.filter(a => a.id == Number(id))
+    if (jobs.length !== 0) {
+      this.formUpdate.patchValue({
+        id: jobs[0].id,
+        title: jobs[0].title,
+        detail: jobs[0].detail,
+        date: jobs[0].date,
+        price: jobs[0].price,
+        idtype: jobs[0].idtype,
+        iduser: jobs[0].iduser,
+        idstate: jobs[0].idstate
+      })
     }
+
+
+
+
 
   }
-  changeStateJob(id_: string, state: string) {
 
-    var ch = 0;
-    if (state == "activo") {
-      ch = 2;
+
+  changeStateJob(id: string, idstate: number) {
+
+    if (idstate === 1) {
+      idstate = 2;
     } else {
-      ch = 1;
-    }
-    for (let index = 0; index < this.jobs.length; index++) {
-      if (id_ == this.jobs[index].id.toString()) {
-        this.formUpdate.patchValue({
-          id: this.jobs[index].id,
-          title: this.jobs[index].title,
-          detail: this.jobs[index].detail,
-          date: this.jobs[index].date,
-          price: this.jobs[index].price,
-          idtype: this.jobs[index].idtype,
-          iduser: this.jobs[index].iduser,
-          idstate: ch,
-        })
-      }
-
+      idstate = 1;
     }
 
-
-    this.jobsService.updateJob(id_, this.formUpdate.value)
+    this.jobsService.updateJob(id, { idstate: idstate })
       .subscribe(user => {
         this.fetchJobs();//after storage items, it back to fill the table
       });
@@ -203,22 +201,22 @@ export class JobsComponent implements OnInit {
       case "1":
         if (this.formFilter.value.iduser == 0) {
           this.filterByState(this.formFilter.value.state);
-        } else{
+        } else {
           this.filterFix(this.formFilter.value.iduser.toString(), "1");
         }
-        
+
         break;
       default:
         if (this.formFilter.value.iduser == 0) {
           this.filterByState(this.formFilter.value.state);
-        } else{
+        } else {
           this.filterFix(this.formFilter.value.iduser.toString(), "2");
         }
         break;
     }
 
   }
-//buscar usuarios segun su id y su estado
+  //buscar usuarios segun su id y su estado
   filterFix(idUser: string, state: string) {
     this.jobsService.getAllJobs()
       .subscribe(jobs => {
@@ -270,23 +268,23 @@ export class JobsComponent implements OnInit {
         let element: Job[] = [];
         let cont = 0;
 
-        
-          for (let index = 0; index < jobs.length; index++) {
-            if (jobs[index].idstate.toString() == state) {
-              element[cont] = jobs[index];
-              cont++;
-            }
 
+        for (let index = 0; index < jobs.length; index++) {
+          if (jobs[index].idstate.toString() == state) {
+            element[cont] = jobs[index];
+            cont++;
           }
 
-          this.jobs = element;
+        }
 
-          //Calculamos el TOTAL 
-          this.total = this.jobs.reduce((
-            acc,
-            obj,
-          ) => acc + obj.price, 0);
-        
+        this.jobs = element;
+
+        //Calculamos el TOTAL 
+        this.total = this.jobs.reduce((
+          acc,
+          obj,
+        ) => acc + obj.price, 0);
+
 
       });
   }
