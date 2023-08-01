@@ -21,7 +21,7 @@
                         <div class="card-header">
 
                             <h3 class="card-title">Works done</h3>
-                            
+
                             <div class="card-tools">
                                 <!--card filters-->
                                 <div class="card card-sm">
@@ -34,7 +34,7 @@
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-primary btn-sm"
                                                 data-card-widget="collapse" title="Collapse" (click)="fetchJobs()">
-                                                <i class="fas fa-minus" ></i>
+                                                <i class="fas fa-minus"></i>
                                             </button>
                                         </div>
                                         <!-- /.card-tools -->
@@ -46,13 +46,17 @@
                                             <div class="row">
                                                 <div class="col col-6">
                                                     <div class="form-group">
-                                                        <label for="iduser">Select user</label>
+                                                        <label for="iduser">Select
+                                                            user</label>
                                                         <select class="custom-select form-control-border border-width-2"
                                                             id="iduser" name="iduser" formControlName="iduser">
-                                                            <option value="" disabled>Select a option</option>
+                                                            <option value disabled>Select
+                                                                a option</option>
                                                             <option value="0">All</option>
                                                             <option *ngFor="let user of users_" value="{{ user.id }}">
-                                                                {{ user.name }} {{ user.lastname }}
+                                                                {{ user.name }}
+                                                                {{ user.lastname
+                                                                }}
                                                             </option>
                                                         </select>
                                                     </div>
@@ -94,7 +98,7 @@
                                 </div>
                                 <!--boton del modal para agregar registros-->
                                 <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal"
-                                    data-target="#modal-secondary">
+                                    data-target="#modal-secondary" *ngIf="userLogin.type==='root'">
                                     Add
                                     <span class="fa fa-plus"></span>
                                 </button>
@@ -135,10 +139,10 @@
                                                 </span>
 
                                             </div>
-                                            
 
                                             <button type="button" class="btn btn-outline-light btn-sm"
-                                                (click)="changeStateJob(job.id.toString(), job.idstate)" *ngIf="userLogin.type === 'root'">
+                                                (click)="changeStateJob(job.id.toString(), job.idstate)"
+                                                *ngIf="userLogin.type === 'root'">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                     fill="currentColor" class="bi bi-toggles2" viewBox="0 0 16 16">
                                                     <path
@@ -186,7 +190,6 @@
                                         </td>
 
                                     </tr>
-
 
                                 </tbody>
                                 <tfoot class="Total">
@@ -258,7 +261,8 @@
                                                 <div class="form-group">
                                                     <label for="date">Date</label>
 
-                                                    <input type="date" class="form-control form-control-border border-width-2"
+                                                    <input type="date"
+                                                        class="form-control form-control-border border-width-2"
                                                         id="date" formControlName="date">
 
                                                     <!--mensajes de validación-->
@@ -292,7 +296,8 @@
                                                     <label for="idtype">Type job</label>
                                                     <select class="custom-select form-control-border border-width-2"
                                                         id="idtype" name="idtype" formControlName="idtype">
-                                                        <option value="" disabled>Select a option</option>
+                                                        <option value disabled>Select
+                                                            a option</option>
                                                         <option *ngFor="let typeJob of typeJobs_"
                                                             value="{{ typeJob.id }}">
                                                             {{ typeJob.name }}
@@ -301,12 +306,15 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="iduser">Select user</label>
+                                                    <label for="iduser">Select
+                                                        user</label>
                                                     <select class="custom-select form-control-border border-width-2"
                                                         id="iduser" name="iduser" formControlName="iduser">
-                                                        <option value="" disabled>Select a option</option>
+                                                        <option value disabled>Select
+                                                            a option</option>
                                                         <option *ngFor="let user of users_" value="{{ user.id }}">
-                                                            {{ user.name }} {{ user.lastname }}
+                                                            {{ user.name }} {{
+                                                            user.lastname }}
                                                         </option>
                                                     </select>
                                                 </div>
@@ -421,7 +429,7 @@
                         <label for="idstate">State</label>
                         <select class="custom-select form-control-border border-width-2" id="idstate" name="idstate"
                             formControlName="idstate">
-                            <option value="" disabled>Select a option</option>
+                            <option value disabled>Select a option</option>
                             <option *ngFor="let state of states_" value="{{ state.id }}">
                                 {{ state.name }}
                             </option>
@@ -431,7 +439,7 @@
                         <label for="idtype">Type job</label>
                         <select class="custom-select form-control-border border-width-2" id="idtype" name="idtype"
                             formControlName="idtype">
-                            <option value="" disabled>Select a option</option>
+                            <option value disabled>Select a option</option>
                             <option *ngFor="let typeJob of typeJobs_" value="{{ typeJob.id }}">
                                 {{ typeJob.name }}
                             </option>
@@ -442,7 +450,7 @@
                         <label for="iduser">Select user</label>
                         <select class="custom-select form-control-border border-width-2" id="iduser" name="iduser"
                             formControlName="iduser">
-                            <option value="" disabled>Select a option</option>
+                            <option value disabled>Select a option</option>
                             <option *ngFor="let user of users_" value="{{ user.id }}">
                                 {{ user.name }} {{ user.lastname }}
                             </option>
